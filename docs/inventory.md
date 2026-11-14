@@ -28,7 +28,7 @@ project ever changes hands.
 | xcode-build-server | MIT | yes | not bundled; user installs via brew |
 | rust-analyzer | MIT OR Apache-2.0 | yes | external rustup-installed tool; not bundled |
 | clangd | Apache-2.0 with LLVM exception | yes | external Xcode/LLVM tool; not bundled |
-| typescript-language-server | Apache-2.0 | yes | v6.0.1; bundled runtime dependency; licence checked in installed package |
+| TypeScript 7 (`tsc --lsp`) | Apache-2.0 | yes | v7.0.2; bundled runtime dependency (native binary via per-platform optional package); replaced typescript-language-server 2026-11-14; licence checked in installed package |
 | Pyright | MIT | yes | v1.1.414; bundled runtime dependency; licence checked in installed package |
 | wat_server (g-plane/wasm-language-tools) | MIT | yes | external v0.11.0 arm64 macOS release; installed at ~/.local/bin; not bundled |
 

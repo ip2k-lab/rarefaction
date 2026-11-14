@@ -109,7 +109,7 @@ def architecture(p):
     b.append(rect(708, 84, 220, 334, p["surface"], p["muted"], 1.5, 16))
     b.append(text(728, 114, "Language servers", p["text"], 15, 700))
     servers = [("Swift", "sourcekit-lsp", "love"), ("Rust", "rust-analyzer", "gold"), ("C / C++", "clangd", "rose"),
-               ("TS / JS", "typescript-language-server", "pine"), ("Python", "pyright", "foam"),
+               ("TS / JS", "tsc --lsp", "pine"), ("Python", "pyright", "foam"),
                ("WAT", "wat_server", "iris")]
     for i, (lang, srv, c) in enumerate(servers):
         y = 128 + i * 46
