@@ -5,6 +5,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- TypeScript 7 (the native Go compiler) replaces TypeScript 5. It ships no
+  `tsserver.js`, so typescript-language-server can no longer host it: the
+  `typescript` profile now launches TypeScript's own `tsc --lsp --stdio`
+  (call hierarchy, references and implementations are all advertised) and
+  the typescript-language-server dependency is removed. The server is found
+  through the `typescript` package's per-platform optional dependency, so
+  install with optional dependencies enabled. Supersedes Dependabot #4.
+
 ## [0.4.2] - 2026-10-20
 
 ### Fixed

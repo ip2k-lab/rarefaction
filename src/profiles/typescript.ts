@@ -1,13 +1,20 @@
 import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { listSourceFiles } from "../fs.js";
 import { exists, liveFreshness, matchesWorkspaceGlobs, outside, stemFrom, testFile, workspacePath } from "./common.js";
 import type { Profile } from "./profile.js";
 const extensions = [".ts", ".tsx", ".mts", ".cts", ".js", ".jsx", ".mjs", ".cjs"];
 const require = createRequire(import.meta.url);
+
+/** The native compiler binary that the `typescript` package's optional platform package carries. */
+function nativeTscPath(): string {
+  const pkg = `@typescript/typescript-${process.platform}-${process.arch}`;
+  try { return join(dirname(require.resolve(`${pkg}/package.json`)), "lib", process.platform === "win32" ? "tsc.exe" : "tsc"); }
+  catch { throw new Error(`TypeScript 7's native compiler package ${pkg} is not installed; reinstall rarefaction with optional dependencies enabled.`); }
+}
 export const typescriptProfile: Profile = {
-  id: "typescript", displayName: "TypeScript/JavaScript (typescript-language-server)", extensions,
+  id: "typescript", displayName: "TypeScript/JavaScript (tsc --lsp)", extensions,
   rootMarkers: ["tsconfig.json", "jsconfig.json"],
   // tsserver answers call hierarchy inside one tsconfig project, whatever
   // directory the language server was started in, so an enclosing workspace
@@ -24,8 +31,10 @@ export const typescriptProfile: Profile = {
     return { ok, facts: [config ? "TypeScript/JavaScript project config found" : "Inferred TypeScript/JavaScript project"],
       advice: config ? [] : ["Use tsconfig.json/jsconfig.json to define source membership, module resolution and JSX settings."] };
   },
-  async launch() { return { command: process.execPath, args: [require.resolve("typescript-language-server/lib/cli.mjs"), "--stdio"],
-    initializationOptions: { tsserver: { path: require.resolve("typescript/lib/tsserver.js") } } }; },
+  // TypeScript 7 is a native (Go) compiler with no tsserver.js, so
+  // typescript-language-server cannot drive it. Its own `tsc --lsp --stdio`
+  // speaks LSP directly, including call hierarchy and implementations.
+  async launch() { return { command: nativeTscPath(), args: ["--lsp", "--stdio"] }; },
   freshness: root => liveFreshness(root, extensions),
   isTestFile: testFile,
   testedStem: stemFrom(/(?:^|\/)([^/]+)\.(?:test|spec)\.[^./]+$/),

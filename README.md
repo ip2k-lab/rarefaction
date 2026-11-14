@@ -226,7 +226,7 @@ runnable selection).
 | `swift` | sourcekit-lsp | Xcode or a Swift toolchain; SwiftPM, or Xcode with a build-server config |
 | `rust` | rust-analyzer | Cargo.toml or rust-project.json; embedded/no_std/Wasm target settings supported; a project that pins a toolchain needs `rustup component add rust-analyzer --toolchain <channel>` (`status` says so) |
 | `c` | clangd | C/C++; compile_commands.json or compile_flags.txt for accurate include paths and defines |
-| `typescript` | typescript-language-server | TypeScript/JavaScript, TSX/JSX; server and TypeScript bundled as dependencies |
+| `typescript` | `tsc --lsp` (TypeScript 7) | TypeScript/JavaScript, TSX/JSX; the native TypeScript 7 language server, bundled with the `typescript` dependency |
 | `python` | Pyright | Python and stubs; bundled; configure interpreter/import paths for your environment |
 | `wasm` | wat_server | WebAssembly `.wat` text; install the [prebuilt server](https://github.com/g-plane/wasm-language-tools/releases) on PATH |
 
