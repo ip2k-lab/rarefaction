@@ -6,6 +6,7 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Changed
+- CI's test job moves to the LAN's self-hosted runners when GitHub's Actions budget is spent or hosted jobs queue, through the repository variable `CI_LIGHT`. Unset, it runs on GitHub's `ubuntu-24.04` as before. No user-facing change.
 - TypeScript 7 (the native Go compiler) replaces TypeScript 5. It ships no
   `tsserver.js`, so typescript-language-server can no longer host it: the
   `typescript` profile now launches TypeScript's own `tsc --lsp --stdio`
